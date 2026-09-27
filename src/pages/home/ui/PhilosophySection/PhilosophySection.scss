@@ -1,0 +1,223 @@
+@use '@/app/styles/variables' as *;
+
+.philosophy-section {
+    position: relative;
+
+    min-height: 100svh;
+    padding: clamp(7rem, 13vw, 12rem) 0;
+
+    overflow: hidden;
+
+    background: $color-black;
+
+    isolation: isolate;
+}
+
+.philosophy-section__background {
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+}
+
+.philosophy-section__background-word {
+    font-family: $font-display;
+    font-size: clamp(14rem, 42vw, 48rem);
+    font-weight: 500;
+    line-height: 0.7;
+    letter-spacing: -0.08em;
+    white-space: nowrap;
+
+    color: rgba($color-cream, 0.025);
+
+    transform: translateX(-2%);
+    user-select: none;
+}
+
+.philosophy-section__container {
+    position: relative;
+
+    min-height: calc(100svh - clamp(14rem, 26vw, 24rem));
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.philosophy-section__meta {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    width: 100%;
+}
+
+.philosophy-section__eyebrow {
+    flex: 0 0 auto;
+}
+
+.philosophy-section__line {
+    width: min(22rem, 30vw);
+    height: 1px;
+
+    background: rgba($color-gold, 0.65);
+
+    transform-origin: left center;
+}
+
+.philosophy-section__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+    align-items: end;
+    gap: clamp(3rem, 8vw, 9rem);
+
+    padding-top: clamp(7rem, 12vw, 11rem);
+}
+
+.philosophy-section__title {
+    max-width: 1050px;
+
+    font-size: clamp(4.5rem, 9.5vw, 10.5rem);
+
+    text-transform: uppercase;
+
+    perspective: 1000px;
+}
+
+.philosophy-section__title-mask {
+    display: block;
+
+    overflow: hidden;
+}
+
+.philosophy-section__title-line {
+    display: block;
+
+    will-change: transform, opacity;
+
+    transform-origin: 50% 100%;
+}
+
+.philosophy-section__side {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    min-height: 18rem;
+
+    padding-bottom: 0.5rem;
+}
+
+.philosophy-section__description {
+    max-width: 270px;
+
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.9;
+    letter-spacing: 0.025em;
+
+    color: rgba($color-cream, 0.58);
+}
+
+.philosophy-section__number {
+    align-self: flex-end;
+
+    font-family: $font-display;
+    font-size: clamp(5rem, 8vw, 8rem);
+    font-weight: 400;
+    line-height: 0.8;
+
+    color: rgba($color-gold, 0.35);
+
+    will-change: transform, opacity;
+}
+
+@media (max-width: 900px) {
+    .philosophy-section {
+        min-height: auto;
+    }
+
+    .philosophy-section__container {
+        min-height: 0;
+    }
+
+    .philosophy-section__content {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .philosophy-section__title {
+        max-width: 850px;
+        font-size: clamp(4rem, 11vw, 7rem);
+    }
+
+    .philosophy-section__side {
+        min-height: auto;
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 3rem;
+    }
+
+    .philosophy-section__description {
+        max-width: 360px;
+    }
+}
+
+@media (max-width: 600px) {
+    .philosophy-section {
+        padding: 6rem 0 7rem;
+    }
+
+    .philosophy-section__meta {
+        gap: 1rem;
+    }
+
+    .philosophy-section__line {
+        flex: 1;
+        width: auto;
+    }
+
+    .philosophy-section__content {
+        gap: 3.5rem;
+        padding-top: 6rem;
+    }
+
+    .philosophy-section__title {
+        font-size: clamp(3.5rem, 16vw, 6rem);
+        line-height: 0.88;
+    }
+
+    .philosophy-section__side {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 1.5rem;
+    }
+
+    .philosophy-section__description {
+        font-size: 0.75rem;
+        line-height: 1.8;
+    }
+
+    .philosophy-section__number {
+        font-size: 4.5rem;
+    }
+
+    .philosophy-section__background-word {
+        font-size: 55vw;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .philosophy-section__title-line,
+    .philosophy-section__number {
+        transform: none !important;
+    }
+}

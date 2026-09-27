@@ -1,0 +1,164 @@
+@use '@/app/styles/variables' as *;
+
+.hero {
+    position: relative;
+    min-height: 100svh;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+
+    isolation: isolate;
+}
+
+.hero__background {
+    position: absolute;
+    inset: -5%;
+
+    z-index: -2;
+
+    background: url('https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2400&q=90')
+        center / cover no-repeat;
+
+    transform: scale(1.05);
+}
+
+.hero__overlay {
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(11, 11, 10, 0.82) 0%,
+            rgba(11, 11, 10, 0.48) 48%,
+            rgba(11, 11, 10, 0.2) 100%
+        ),
+        linear-gradient(
+            180deg,
+            rgba(11, 11, 10, 0.35) 0%,
+            transparent 35%,
+            rgba(11, 11, 10, 0.72) 100%
+        );
+}
+
+.hero__content {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+}
+
+.hero__eyebrow {
+    margin-bottom: 2rem;
+
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.7);
+}
+
+.hero__title {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 900px;
+
+    font-size: clamp(5rem, 12vw, 12rem);
+    text-transform: uppercase;
+
+    span {
+        display: block;
+
+        &:nth-child(2) {
+            margin-left: 10vw;
+        }
+
+        &:nth-child(3) {
+            margin-left: 4vw;
+        }
+    }
+}
+
+.hero__description {
+    margin-top: 3rem;
+
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    color: $color-muted;
+}
+
+.hero__scroll {
+    position: absolute;
+    left: $container-padding;
+    bottom: 2.5rem;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.6);
+}
+
+.hero__scroll-line {
+    width: 4rem;
+    height: 1px;
+
+    background: rgba($color-cream, 0.45);
+}
+
+@media (max-width: 768px) {
+    .hero__content {
+        padding-top: 7rem;
+        padding-bottom: 7rem;
+    }
+
+    .hero__title {
+        font-size: clamp(4.5rem, 20vw, 8rem);
+
+        span {
+            &:nth-child(2),
+            &:nth-child(3) {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .hero__scroll {
+        left: 1.25rem;
+        bottom: 1.5rem;
+    }
+}
+
+.hero {
+    perspective: 1000px;
+}
+
+.hero__title {
+    perspective: 1000px;
+
+    span {
+        transform-origin: 50% 100%;
+        will-change: transform, opacity;
+    }
+}
+
+.hero__background {
+    will-change: transform, opacity;
+}
+
+.hero__content {
+    will-change: transform, opacity;
+}
+
+.hero__scroll {
+    will-change: transform, opacity;
+}

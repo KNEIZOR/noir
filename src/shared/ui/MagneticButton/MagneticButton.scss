@@ -1,0 +1,66 @@
+@use '@/app/styles/variables' as *;
+
+.magnetic-button {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 180px;
+    min-height: 56px;
+
+    padding: 1rem 1.5rem;
+
+    overflow: hidden;
+
+    border: 1px solid rgba($color-cream, 0.3);
+    border-radius: 999px;
+
+    background: transparent;
+    color: $color-cream;
+
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    transition:
+        color 400ms ease,
+        border-color 400ms ease;
+
+    &::before {
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        background: $color-cream;
+
+        transform: translateY(101%);
+
+        transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    span {
+        position: relative;
+        z-index: 1;
+    }
+
+    &:hover {
+        color: $color-black;
+        border-color: $color-cream;
+
+        &::before {
+            transform: translateY(0);
+        }
+    }
+}
+
+@media (pointer: coarse) {
+    .magnetic-button {
+        &:active {
+            transform: scale(0.97);
+        }
+    }
+}

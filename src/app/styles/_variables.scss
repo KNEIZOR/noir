@@ -1,0 +1,18 @@
+$color-black: #0b0b0a;
+$color-surface: #151513;
+$color-cream: #e8e4da;
+$color-muted: #9c988d;
+$color-gold: #b59a67;
+$color-white: #ffffff;
+
+$font-display: 'Cormorant Garamond', Georgia, serif;
+$font-body: 'Manrope', Arial, sans-serif;
+
+$container-width: 1440px;
+$container-padding: clamp(1.25rem, 4vw, 4rem);
+
+$transition-fast: 240ms cubic-bezier(0.22, 1, 0.36, 1);
+$transition-smooth: 700ms cubic-bezier(0.22, 1, 0.36, 1);
+
+$z-header: 100;
+$z-cursor: 1000;
