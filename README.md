@@ -1,75 +1,325 @@
-# React + TypeScript + Vite
+# NOIRÉ — Parisian Restaurant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Premium restaurant website built as a modern full-stack-ready frontend experience with a strong focus on visual design, motion, performance and responsive UX.
 
-Currently, two official plugins are available:
+**Live:** https://noire-paris.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+NOIRÉ is a premium restaurant website concept inspired by contemporary Parisian dining.
 
-## Expanding the ESLint configuration
+The project focuses on creating an immersive digital experience rather than a conventional restaurant landing page.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The interface combines:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Editorial typography
+- Large cinematic imagery
+- Smooth scrolling
+- Parallax effects
+- Scroll-triggered animations
+- Micro-interactions
+- Responsive layouts
+- SEO metadata
+- Structured data
+- Dynamic routing
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The website is designed to feel like a real premium restaurant brand rather than a generic portfolio template.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
 
+## Features
+
+### Restaurant experience
+
+- Hero section with cinematic introduction
+- Restaurant philosophy
+- Signature dish presentation
+- Menu preview
+- Chef section
+- Restaurant experience section
+- Image gallery
+- Reservation CTA
+- Dedicated About page
+- Dedicated Menu page
+- Individual menu item routes
+- Gallery item routes
+- Reservation page
+
+### Navigation
+
+- React Router
+- Route-based page architecture
+- Scroll-to-top behavior between pages
+- Responsive navigation
+- Mobile menu
+- Animated header interactions
+
+### Animations
+
+- GSAP animations
+- GSAP ScrollTrigger
+- Lenis smooth scrolling
+- Parallax image effects
+- Scroll reveal animations
+- Staggered content animations
+- Magnetic interactions
+- Custom cursor interactions
+- Reduced-motion support
+
+### SEO
+
+- Page-specific titles
+- Page-specific meta descriptions
+- Canonical URLs
+- Open Graph metadata
+- Twitter Card metadata
+- Robots directives
+- XML sitemap
+- Restaurant structured data using JSON-LD
+- SEO-friendly route structure
+- Favicon
+
+---
+
+## Pages
+
+| Route            | Description                                  |
+| ---------------- | -------------------------------------------- |
+| `/`              | Main restaurant experience                   |
+| `/about`         | Restaurant story, philosophy, chef and space |
+| `/menu`          | Full restaurant menu                         |
+| `/menu/:slug`    | Individual menu item                         |
+| `/gallery/:slug` | Individual gallery item                      |
+| `/reservation`   | Reservation page                             |
+
+---
+
+## Tech Stack
+
+### Frontend
+
+- React
+- TypeScript
+- Vite
+- React Router
+- SCSS
+
+### Animation
+
+- GSAP
+- GSAP ScrollTrigger
+- Lenis
+
+### SEO
+
+- React Helmet Async
+- Schema.org / JSON-LD
+- Open Graph
+- XML Sitemap
+- Robots.txt
+
+### Tooling
+
+- ESLint
+- TypeScript
+- Sharp
+- Vite
+
+---
+
+## Architecture
+
+The project follows a modular component-based architecture.
+
+```text
+src/
+├── app/
+│   ├── router/
+│   └── styles/
+│
+├── entities/
+│   └── menu/
+│
+├── pages/
+│   ├── home/
+│   ├── about/
+│   ├── menu/
+│   ├── menu-item/
+│   ├── gallery-item/
+│   └── reservation/
+│
+├── shared/
+│   ├── animations/
+│   ├── seo/
+│   └── ui/
+│
+├── widgets/
+│   ├── header/
+│   ├── footer/
+│   └── smooth-scroll/
+│
+├── App.tsx
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+The architecture separates:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Pages
+- Reusable UI
+- Business/domain data
+- Global animations
+- SEO configuration
+- Layout components
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+This makes the project easier to maintain and extend.
 
+---
+
+## Animation System
+
+Animations are built around GSAP and ScrollTrigger.
+
+The project uses animation patterns such as:
+
+```text
+Page load
+    ↓
+Hero reveal
+    ↓
+Scroll-triggered sections
+    ↓
+Parallax imagery
+    ↓
+Content reveal
+    ↓
+Micro-interactions
 ```
+
+Lenis provides smooth scrolling while GSAP's ticker keeps scroll-based animations synchronized.
+
+Animations also account for users who prefer reduced motion.
+
+---
+
+## SEO
+
+The project includes a centralized SEO system.
+
+Each main page has its own:
+
+- `<title>`
+- Meta description
+- Canonical URL
+- Open Graph metadata
+- Twitter metadata
+
+The homepage additionally provides Restaurant structured data.
+
+Example production URLs:
+
+```text
+https://noire-paris.vercel.app/
+https://noire-paris.vercel.app/about
+https://noire-paris.vercel.app/menu
+https://noire-paris.vercel.app/reservation
+```
+
+The project also includes:
+
+```text
+public/
+├── favicon.svg
+├── robots.txt
+└── sitemap.xml
+```
+
+---
+
+## Responsive Design
+
+The website is designed for:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+Layouts, typography, imagery and animations adapt to different viewport sizes.
+
+---
+
+## Performance
+
+Performance considerations include:
+
+- Optimized WebP images
+- Lazy-loaded images where appropriate
+- Async image decoding
+- Component-based rendering
+- Route-level lazy loading
+- Optimized production builds
+- Controlled animation complexity
+
+---
+
+## Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
+
+```bash
+npm run dev
+```
+
+Create production build:
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+---
+
+## Deployment
+
+The project is deployed on Vercel.
+
+Production:
+
+**https://noire-paris.vercel.app/**
+
+The project uses SPA routing with Vercel rewrites so direct navigation to application routes works correctly.
+
+---
+
+## Project Goals
+
+The main goals of the project were:
+
+1. Create a visually distinctive restaurant website.
+2. Build reusable and maintainable React architecture.
+3. Implement professional scroll-based animation.
+4. Create a responsive premium UI.
+5. Implement production-oriented SEO.
+6. Demonstrate modern frontend development practices.
+7. Create a realistic portfolio project suitable for commercial client work.
+
+---
+
+## Status
+
+**Completed**
+
+The current version includes the main website experience, responsive layouts, routing, animations, SEO infrastructure and Vercel deployment.
