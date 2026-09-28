@@ -1,0 +1,138 @@
+@use '@/app/styles/variables' as *;
+
+.values-section {
+    padding-block: clamp(7rem, 13vw, 12rem);
+
+    background: $color-black;
+}
+
+.values-section__heading {
+    max-width: 52rem;
+
+    margin-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.values-section__heading .eyebrow {
+    margin: 0 0 2rem;
+
+    color: $color-gold;
+}
+
+.values-section__heading .section-title {
+    margin: 0;
+
+    color: $color-cream;
+}
+
+.values-section__heading em {
+    color: $color-gold;
+}
+
+.values-section__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    border-top: 1px solid rgba($color-cream, 0.14);
+}
+
+.values-section__item {
+    min-height: 18rem;
+
+    padding: 1.5rem 1.5rem 0 0;
+
+    border-right: 1px solid rgba($color-cream, 0.1);
+}
+
+.values-section__item:not(:first-child) {
+    padding-left: 1.5rem;
+}
+
+.values-section__item:last-child {
+    border-right: 0;
+}
+
+.values-section__item > span {
+    display: block;
+
+    margin-bottom: 4rem;
+
+    font-size: 0.54rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+
+    color: $color-gold;
+}
+
+.values-section__item h3 {
+    margin: 0;
+
+    font-family: $font-display;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 500;
+
+    color: $color-cream;
+}
+
+.values-section__item p {
+    max-width: 15rem;
+
+    margin: 1rem 0 0;
+
+    font-size: 0.7rem;
+    line-height: 1.8;
+
+    color: rgba($color-cream, 0.45);
+}
+
+@media (max-width: 850px) {
+    .values-section__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .values-section__item {
+        min-height: 15rem;
+
+        border-bottom: 1px solid rgba($color-cream, 0.1);
+    }
+
+    .values-section__item:nth-child(2) {
+        border-right: 0;
+    }
+
+    .values-section__item:nth-child(3),
+    .values-section__item:nth-child(4) {
+        padding-top: 1.5rem;
+    }
+
+    .values-section__item:nth-child(4) {
+        border-right: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .values-section {
+        padding-block: 6rem;
+    }
+
+    .values-section__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .values-section__item,
+    .values-section__item:not(:first-child) {
+        min-height: auto;
+
+        padding: 1.5rem 0 2rem;
+
+        border-right: 0;
+        border-bottom: 1px solid rgba($color-cream, 0.1);
+    }
+
+    .values-section__item > span {
+        margin-bottom: 2rem;
+    }
+
+    .values-section__item:last-child {
+        border-bottom: 0;
+    }
+}

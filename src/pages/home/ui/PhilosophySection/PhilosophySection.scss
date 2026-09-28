@@ -4,7 +4,7 @@
     position: relative;
 
     min-height: 100svh;
-    padding: clamp(7rem, 13vw, 12rem) 0;
+    padding: clamp(7rem, 12vw, 11rem) 0;
 
     overflow: hidden;
 
@@ -23,10 +23,14 @@
     align-items: center;
     justify-content: center;
 
+    overflow: hidden;
+
     pointer-events: none;
 }
 
 .philosophy-section__background-word {
+    display: block;
+
     font-family: $font-display;
     font-size: clamp(14rem, 42vw, 48rem);
     font-weight: 500;
@@ -37,33 +41,51 @@
     color: rgba($color-cream, 0.025);
 
     transform: translateX(-2%);
+
     user-select: none;
 }
+
+/* =========================================
+   CONTAINER
+========================================= */
 
 .philosophy-section__container {
     position: relative;
 
-    min-height: calc(100svh - clamp(14rem, 26vw, 24rem));
+    width: 100%;
+
+    min-height: calc(100svh - clamp(14rem, 24vw, 22rem));
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+/* =========================================
+   META
+========================================= */
+
 .philosophy-section__meta {
     display: flex;
     align-items: center;
-    gap: 2rem;
 
     width: 100%;
+
+    gap: 2rem;
 }
 
 .philosophy-section__eyebrow {
     flex: 0 0 auto;
+
+    margin: 0;
 }
 
 .philosophy-section__line {
-    width: min(22rem, 30vw);
+    flex: 1 1 auto;
+
+    width: auto;
+    max-width: 22rem;
+
     height: 1px;
 
     background: rgba($color-gold, 0.65);
@@ -71,41 +93,79 @@
     transform-origin: left center;
 }
 
+/* =========================================
+   CONTENT
+========================================= */
+
 .philosophy-section__content {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
-    align-items: end;
-    gap: clamp(3rem, 8vw, 9rem);
 
-    padding-top: clamp(7rem, 12vw, 11rem);
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+
+    align-items: end;
+
+    gap: clamp(2.5rem, 6vw, 7rem);
+
+    padding-top: clamp(6rem, 10vw, 9rem);
 }
 
-.philosophy-section__title {
-    max-width: 1050px;
+/* =========================================
+   TITLE
+========================================= */
 
-    font-size: clamp(4.5rem, 9.5vw, 10.5rem);
+.philosophy-section__title {
+    position: relative;
+
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+
+    font-size: clamp(4rem, 8vw, 9rem);
+    line-height: 0.86;
+
+    letter-spacing: -0.055em;
 
     text-transform: uppercase;
-
-    perspective: 1000px;
 }
 
 .philosophy-section__title-mask {
     display: block;
 
+    width: 100%;
+    max-width: 100%;
+
     overflow: hidden;
+
+    padding-bottom: 0.05em;
 }
 
 .philosophy-section__title-line {
     display: block;
 
+    width: max-content;
+    max-width: 100%;
+
+    margin: 0;
+
+    line-height: 0.86;
+
+    transform: translate3d(0, 0, 0);
+
     will-change: transform, opacity;
 
-    transform-origin: 50% 100%;
+    backface-visibility: hidden;
 }
+
+/* =========================================
+   SIDE
+========================================= */
 
 .philosophy-section__side {
     position: relative;
+
+    min-width: 0;
 
     display: flex;
     flex-direction: column;
@@ -117,7 +177,9 @@
 }
 
 .philosophy-section__description {
-    max-width: 270px;
+    max-width: 260px;
+
+    margin: 0;
 
     font-size: 0.8rem;
     font-weight: 400;
@@ -130,15 +192,59 @@
 .philosophy-section__number {
     align-self: flex-end;
 
+    margin: 0;
+
     font-family: $font-display;
-    font-size: clamp(5rem, 8vw, 8rem);
+    font-size: clamp(5rem, 7vw, 7rem);
     font-weight: 400;
     line-height: 0.8;
 
     color: rgba($color-gold, 0.35);
 
     will-change: transform, opacity;
+
+    transform: translate3d(0, 0, 0);
 }
+
+/* =========================================
+   LARGE DESKTOP
+========================================= */
+
+@media (min-width: 1400px) {
+    .philosophy-section__content {
+        grid-template-columns: minmax(0, 1fr) 280px;
+
+        gap: 6rem;
+    }
+
+    .philosophy-section__title {
+        font-size: clamp(6rem, 8.2vw, 10rem);
+    }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+    .philosophy-section__content {
+        grid-template-columns: minmax(0, 1fr) 220px;
+
+        gap: 3rem;
+    }
+
+    .philosophy-section__title {
+        font-size: clamp(4rem, 8.5vw, 7.5rem);
+    }
+
+    .philosophy-section__description {
+        max-width: 220px;
+    }
+}
+
+/* =========================================
+   TABLET / SMALL LAPTOP
+========================================= */
 
 @media (max-width: 900px) {
     .philosophy-section {
@@ -151,18 +257,30 @@
 
     .philosophy-section__content {
         grid-template-columns: 1fr;
+
         gap: 4rem;
+
+        padding-top: 7rem;
     }
 
     .philosophy-section__title {
         max-width: 850px;
+
         font-size: clamp(4rem, 11vw, 7rem);
+        line-height: 0.9;
+    }
+
+    .philosophy-section__title-line {
+        line-height: 0.9;
     }
 
     .philosophy-section__side {
         min-height: auto;
+
+        display: flex;
         flex-direction: row;
         align-items: flex-end;
+
         gap: 3rem;
     }
 
@@ -170,6 +288,10 @@
         max-width: 360px;
     }
 }
+
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-width: 600px) {
     .philosophy-section {
@@ -182,26 +304,49 @@
 
     .philosophy-section__line {
         flex: 1;
+
         width: auto;
     }
 
     .philosophy-section__content {
         gap: 3.5rem;
+
         padding-top: 6rem;
     }
 
     .philosophy-section__title {
-        font-size: clamp(3.5rem, 16vw, 6rem);
-        line-height: 0.88;
+        width: 100%;
+
+        font-size: clamp(3.3rem, 15.5vw, 5.8rem);
+        line-height: 0.9;
+
+        letter-spacing: -0.045em;
+    }
+
+    .philosophy-section__title-mask {
+        padding-bottom: 0.06em;
+    }
+
+    .philosophy-section__title-line {
+        width: auto;
+        max-width: 100%;
+
+        line-height: 0.9;
+
+        white-space: normal;
     }
 
     .philosophy-section__side {
         display: grid;
-        grid-template-columns: 1fr auto;
+
+        grid-template-columns: minmax(0, 1fr) auto;
+
         gap: 1.5rem;
     }
 
     .philosophy-section__description {
+        max-width: 100%;
+
         font-size: 0.75rem;
         line-height: 1.8;
     }
@@ -214,6 +359,28 @@
         font-size: 55vw;
     }
 }
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+    .philosophy-section__title {
+        font-size: 3.1rem;
+    }
+
+    .philosophy-section__side {
+        grid-template-columns: 1fr;
+    }
+
+    .philosophy-section__number {
+        justify-self: end;
+    }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
     .philosophy-section__title-line,

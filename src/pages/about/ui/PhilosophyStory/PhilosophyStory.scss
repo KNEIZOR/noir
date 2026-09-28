@@ -1,0 +1,143 @@
+@use '@/app/styles/variables' as *;
+
+.philosophy-story {
+    position: relative;
+
+    padding-block: clamp(7rem, 15vw, 14rem);
+
+    overflow: hidden;
+
+    background: $color-black;
+}
+
+.philosophy-story__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+
+    align-items: center;
+
+    gap: clamp(4rem, 10vw, 12rem);
+}
+
+.philosophy-story__image-wrap {
+    position: relative;
+
+    height: clamp(34rem, 58vw, 52rem);
+
+    overflow: hidden;
+}
+
+.philosophy-story__image {
+    position: absolute;
+    inset: -8%;
+
+    background: url('/images/gallery/kitchen.webp') center / cover no-repeat;
+
+    will-change: transform;
+}
+
+.philosophy-story__image-label {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+
+    padding: 0.6rem 0.8rem;
+
+    border: 1px solid rgba($color-cream, 0.18);
+
+    background: rgba($color-black, 0.35);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    font-size: 0.52rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.7);
+}
+
+.philosophy-story__content {
+    max-width: 39rem;
+}
+
+.philosophy-story__eyebrow {
+    margin: 0 0 2.5rem;
+
+    color: $color-gold;
+}
+
+.philosophy-story__title {
+    margin: 0;
+
+    color: $color-cream;
+}
+
+.philosophy-story__title em {
+    color: $color-gold;
+}
+
+.philosophy-story__text {
+    max-width: 31rem;
+
+    margin: 2.5rem 0 0;
+
+    font-size: 0.82rem;
+    line-height: 1.95;
+
+    color: rgba($color-cream, 0.62);
+}
+
+.philosophy-story__signature {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.45rem;
+
+    margin-top: 4rem;
+
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.42);
+}
+
+.philosophy-story__signature span:first-child {
+    color: $color-cream;
+}
+
+@media (max-width: 850px) {
+    .philosophy-story__grid {
+        grid-template-columns: 1fr;
+
+        gap: 4rem;
+    }
+
+    .philosophy-story__image-wrap {
+        height: 75vw;
+        max-height: 40rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .philosophy-story {
+        padding-block: 6rem;
+    }
+
+    .philosophy-story__image-wrap {
+        height: 110vw;
+    }
+
+    .philosophy-story__text {
+        font-size: 0.76rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .philosophy-story__image {
+        transform: none !important;
+    }
+}

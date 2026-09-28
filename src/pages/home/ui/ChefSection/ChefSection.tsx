@@ -10,6 +10,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const chefDetails = ['Paris', 'Copenhagen', 'Tokyo'];
 
+const chefImage =
+    'https://images.openai.com/static-rsc-4/ihbUZeEf8-qoTfIlvp4A9H6GTQR_rYwVJo0-yUoQFRfTZ4ZJ6nQZetK9edsP7GBUbsiq4TgJD2KLSOKUeMbkbWzS5wAS2lmHHV4EbdVsHtMbVZ77HUjaVOEHUA_nf9Xqs5B3AwXf_HHVzEv9OsP_zNusGCZsZuhl28G9Llmuv0Qk7SgRCeY9LxaepYBPjHW3?purpose=fullsize';
+
 export function ChefSection() {
     const sectionRef = useRef<HTMLElement>(null);
     const imageWrapRef = useRef<HTMLDivElement>(null);
@@ -47,6 +50,14 @@ export function ChefSection() {
                 return;
             }
 
+            const reducedMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)',
+            );
+
+            if (reducedMotion.matches) {
+                return;
+            }
+
             const detailItems = details.querySelectorAll(
                 '.chef-section__detail',
             );
@@ -54,8 +65,8 @@ export function ChefSection() {
             const intro = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: 'top 72%',
-                    end: 'top 28%',
+                    start: 'top 78%',
+                    end: 'top 38%',
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -68,108 +79,97 @@ export function ChefSection() {
                     },
                     {
                         clipPath: 'inset(0 0 0% 0)',
-                        duration: 1.4,
-                        ease: 'power4.inOut',
+                        duration: 1.25,
+                        ease: 'power3.inOut',
                     },
                 )
                 .fromTo(
                     image,
                     {
-                        scale: 1.15,
+                        scale: 1.1,
                     },
                     {
                         scale: 1,
-                        duration: 1.7,
+                        duration: 1.5,
                         ease: 'power3.out',
                     },
-                    '-=1.1',
+                    '-=1',
                 )
                 .fromTo(
                     eyebrow,
                     {
                         opacity: 0,
-                        x: -30,
+                        x: -20,
                     },
                     {
                         opacity: 1,
                         x: 0,
-                        duration: 0.7,
+                        duration: 0.65,
                         ease: 'power3.out',
                     },
-                    '-=0.9',
+                    '-=0.75',
                 )
                 .fromTo(
                     name,
                     {
                         opacity: 0,
-                        y: 70,
+                        y: 45,
                     },
                     {
                         opacity: 1,
                         y: 0,
-                        duration: 1,
-                        ease: 'power4.out',
+                        duration: 0.85,
+                        ease: 'power3.out',
                     },
-                    '-=0.45',
+                    '-=0.4',
                 )
                 .fromTo(
                     quote,
                     {
                         opacity: 0,
-                        y: 35,
+                        y: 25,
                     },
                     {
                         opacity: 1,
                         y: 0,
-                        duration: 0.9,
+                        duration: 0.7,
                         ease: 'power3.out',
                     },
-                    '-=0.55',
+                    '-=0.4',
                 )
                 .fromTo(
                     detailItems,
                     {
                         opacity: 0,
-                        y: 20,
+                        y: 15,
                     },
                     {
                         opacity: 1,
                         y: 0,
-                        duration: 0.6,
-                        stagger: 0.1,
+                        duration: 0.55,
+                        stagger: 0.08,
                         ease: 'power3.out',
                     },
-                    '-=0.5',
+                    '-=0.35',
                 )
                 .fromTo(
                     number,
                     {
                         opacity: 0,
-                        scale: 0.8,
+                        scale: 0.9,
                     },
                     {
                         opacity: 1,
                         scale: 1,
-                        duration: 0.7,
+                        duration: 0.6,
                         ease: 'power3.out',
                     },
-                    '-=0.5',
+                    '-=0.45',
                 );
 
             gsap.to(image, {
-                yPercent: -10,
-                scale: 1.08,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1.5,
-                },
-            });
-
-            gsap.to(verticalName, {
-                yPercent: -20,
+                yPercent: -6,
+                scale: 1.05,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
@@ -179,25 +179,36 @@ export function ChefSection() {
                 },
             });
 
+            gsap.to(verticalName, {
+                yPercent: -12,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 2.5,
+                },
+            });
+
             gsap.to(number, {
-                yPercent: 90,
+                yPercent: 55,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 2.5,
+                },
+            });
+
+            gsap.to(quote, {
+                yPercent: -4,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
                     start: 'top bottom',
                     end: 'bottom top',
                     scrub: 2.2,
-                },
-            });
-
-            gsap.to(quote, {
-                yPercent: -8,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1.7,
                 },
             });
         },
@@ -208,7 +219,7 @@ export function ChefSection() {
 
     return (
         <section ref={sectionRef} className="chef-section" id="chef">
-            <div className="chef-section__background">
+            <div className="chef-section__background" aria-hidden="true">
                 <span className="chef-section__background-letter">C</span>
             </div>
 
@@ -221,8 +232,10 @@ export function ChefSection() {
                         <img
                             ref={imageRef}
                             className="chef-section__image"
-                            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1600&q=90"
-                            alt="Chef preparing a dish in the NOIRÉ kitchen"
+                            src={chefImage}
+                            alt="Professional chef preparing food in a restaurant kitchen"
+                            loading="lazy"
+                            decoding="async"
                         />
 
                         <div className="chef-section__image-overlay" />

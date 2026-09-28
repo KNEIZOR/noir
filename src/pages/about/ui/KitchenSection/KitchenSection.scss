@@ -1,0 +1,244 @@
+@use '@/app/styles/variables' as *;
+
+.kitchen-section {
+    position: relative;
+
+    overflow: hidden;
+
+    padding-block: clamp(7rem, 14vw, 13rem);
+
+    background: $color-surface;
+}
+
+.kitchen-section__background {
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba($color-gold, 0.06),
+            transparent 32%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            rgba($color-gold, 0.04),
+            transparent 30%
+        );
+
+    pointer-events: none;
+}
+
+.kitchen-section__inner {
+    position: relative;
+    z-index: 1;
+}
+
+.kitchen-section__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
+    gap: clamp(3rem, 8vw, 9rem);
+
+    align-items: end;
+
+    margin-bottom: clamp(4rem, 9vw, 8rem);
+}
+
+.kitchen-section__eyebrow {
+    margin: 0;
+
+    color: $color-gold;
+}
+
+.kitchen-section__title {
+    max-width: 12ch;
+
+    margin: 1.5rem 0 0;
+
+    color: $color-cream;
+}
+
+.kitchen-section__intro {
+    max-width: 34rem;
+
+    margin: 0;
+
+    color: rgba($color-cream, 0.58);
+
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    line-height: 1.8;
+}
+
+.kitchen-section__media {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 10;
+
+    overflow: hidden;
+
+    margin-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.kitchen-section__image {
+    position: absolute;
+    inset: -8% 0;
+
+    width: 100%;
+    height: 116%;
+
+    object-fit: cover;
+
+    will-change: transform;
+}
+
+.kitchen-section__image-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        180deg,
+        rgba($color-black, 0.05) 0%,
+        rgba($color-black, 0.18) 100%
+    );
+
+    pointer-events: none;
+}
+
+.kitchen-section__details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    border-top: 1px solid rgba($color-cream, 0.12);
+}
+
+.kitchen-section__detail {
+    position: relative;
+
+    min-height: 18rem;
+
+    padding: 2rem 2rem 2.5rem 0;
+
+    border-right: 1px solid rgba($color-cream, 0.1);
+
+    opacity: 0;
+
+    transform: translateY(2rem);
+}
+
+.kitchen-section__detail:last-child {
+    border-right: 0;
+
+    padding-right: 0;
+}
+
+.kitchen-section__detail + .kitchen-section__detail {
+    padding-left: 2rem;
+}
+
+.kitchen-section__detail-number {
+    display: block;
+
+    margin-bottom: 3.5rem;
+
+    color: $color-gold;
+
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+}
+
+.kitchen-section__detail-title {
+    margin: 0 0 1rem;
+
+    color: $color-cream;
+
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 500;
+    line-height: 0.95;
+}
+
+.kitchen-section__detail-text {
+    max-width: 22rem;
+
+    margin: 0;
+
+    color: rgba($color-cream, 0.48);
+
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+@media (max-width: 900px) {
+    .kitchen-section__header {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .kitchen-section__title {
+        max-width: 10ch;
+    }
+
+    .kitchen-section__media {
+        aspect-ratio: 4 / 3;
+    }
+
+    .kitchen-section__details {
+        grid-template-columns: 1fr;
+    }
+
+    .kitchen-section__detail,
+    .kitchen-section__detail + .kitchen-section__detail {
+        min-height: auto;
+
+        padding: 2rem 0;
+
+        border-right: 0;
+        border-bottom: 1px solid rgba($color-cream, 0.1);
+    }
+
+    .kitchen-section__detail:last-child {
+        border-bottom: 0;
+    }
+
+    .kitchen-section__detail-number {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .kitchen-section {
+        padding-block: 5rem;
+    }
+
+    .kitchen-section__header {
+        margin-bottom: 3.5rem;
+    }
+
+    .kitchen-section__media {
+        aspect-ratio: 3 / 4;
+    }
+
+    .kitchen-section__image {
+        inset: -5% 0;
+
+        height: 110%;
+    }
+
+    .kitchen-section__detail {
+        padding-block: 1.75rem !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .kitchen-section__image {
+        transform: none !important;
+    }
+
+    .kitchen-section__detail {
+        opacity: 1;
+        transform: none;
+    }
+}

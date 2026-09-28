@@ -70,7 +70,7 @@ export function ReservationSection() {
             const intro = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: 'top 70%',
+                    start: 'top 72%',
                     end: 'top 25%',
                     toggleActions: 'play none none reverse',
                 },
@@ -79,7 +79,9 @@ export function ReservationSection() {
             intro
                 .fromTo(
                     background,
-                    { scale: 1.14 },
+                    {
+                        scale: 1.14,
+                    },
                     {
                         scale: 1,
                         duration: 2,
@@ -88,7 +90,9 @@ export function ReservationSection() {
                 )
                 .fromTo(
                     overlay,
-                    { opacity: 0 },
+                    {
+                        opacity: 0,
+                    },
                     {
                         opacity: 1,
                         duration: 1.5,
@@ -98,7 +102,10 @@ export function ReservationSection() {
                 )
                 .fromTo(
                     eyebrow,
-                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 0,
+                        y: 30,
+                    },
                     {
                         opacity: 1,
                         y: 0,
@@ -118,7 +125,7 @@ export function ReservationSection() {
                         duration: 1,
                         ease: 'power4.inOut',
                     },
-                    '-=0.5',
+                    '-=0.55',
                 )
                 .fromTo(
                     titleLines,
@@ -139,7 +146,10 @@ export function ReservationSection() {
                 )
                 .fromTo(
                     description,
-                    { opacity: 0, y: 25 },
+                    {
+                        opacity: 0,
+                        y: 25,
+                    },
                     {
                         opacity: 1,
                         y: 0,
@@ -150,10 +160,15 @@ export function ReservationSection() {
                 )
                 .fromTo(
                     button,
-                    { opacity: 0, y: 25 },
+                    {
+                        opacity: 0,
+                        y: 25,
+                        scale: 0.96,
+                    },
                     {
                         opacity: 1,
                         y: 0,
+                        scale: 1,
                         duration: 0.8,
                         ease: 'power3.out',
                     },
@@ -209,6 +224,18 @@ export function ReservationSection() {
                     scrub: 2.2,
                 },
             });
+
+            gsap.to(line, {
+                scaleX: 0.7,
+                transformOrigin: 'left center',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1.5,
+                },
+            });
         },
         {
             scope: sectionRef,
@@ -224,9 +251,14 @@ export function ReservationSection() {
             <div
                 ref={backgroundRef}
                 className="reservation-section__background"
+                aria-hidden="true"
             />
 
-            <div ref={overlayRef} className="reservation-section__overlay" />
+            <div
+                ref={overlayRef}
+                className="reservation-section__overlay"
+                aria-hidden="true"
+            />
 
             <span
                 ref={numberRef}
@@ -286,9 +318,8 @@ export function ReservationSection() {
                         <MagneticLink
                             ref={buttonRef}
                             className="reservation-section__magnetic"
-                            href="#"
+                            href="/reservation"
                             strength={0.14}
-                            onClick={(event) => event.preventDefault()}
                         >
                             <span className="reservation-section__button">
                                 <span>Reserve a table</span>
@@ -297,7 +328,7 @@ export function ReservationSection() {
                                     className="reservation-section__button-icon"
                                     aria-hidden="true"
                                 >
-                                    ↗
+                                    →
                                 </span>
                             </span>
                         </MagneticLink>

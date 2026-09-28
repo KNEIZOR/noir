@@ -1,0 +1,210 @@
+@use '@/app/styles/variables' as *;
+
+.menu-footer {
+    position: relative;
+    min-height: 80svh;
+    padding: clamp(5rem, 9vw, 9rem) 0 2rem;
+    overflow: hidden;
+    background: $color-surface;
+    isolation: isolate;
+}
+
+.menu-footer__background {
+    position: absolute;
+    z-index: -1;
+    right: -8%;
+    bottom: -8%;
+
+    font-family: $font-display;
+    font-size: clamp(15rem, 38vw, 42rem);
+    font-weight: 500;
+    line-height: 0.65;
+    letter-spacing: -0.09em;
+
+    color: rgba($color-cream, 0.025);
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.menu-footer__container {
+    position: relative;
+    min-height: calc(80svh - clamp(7rem, 12vw, 12rem));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-footer__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-footer__top-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    padding: 0;
+    background: transparent;
+
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.5);
+
+    transition:
+        color $transition-fast,
+        transform $transition-fast;
+
+    &:hover {
+        color: $color-cream;
+        transform: translateY(-2px);
+    }
+}
+
+.menu-footer__main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.5fr);
+    gap: clamp(3rem, 10vw, 10rem);
+    align-items: end;
+    margin: 8rem 0;
+}
+
+.menu-footer__title {
+    font-size: clamp(5rem, 11vw, 12rem);
+    text-transform: uppercase;
+
+    span {
+        display: block;
+        margin-left: clamp(2rem, 8vw, 8rem);
+        color: $color-gold;
+    }
+}
+
+.menu-footer__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.menu-footer__aside > p {
+    max-width: 360px;
+
+    font-size: 0.7rem;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+
+    color: rgba($color-cream, 0.45);
+}
+
+.menu-footer__links {
+    display: flex;
+    flex-direction: column;
+
+    border-top: 1px solid rgba($color-cream, 0.14);
+}
+
+.menu-footer__links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem 0;
+
+    border-bottom: 1px solid rgba($color-cream, 0.14);
+
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.7);
+
+    transition:
+        color $transition-fast,
+        padding $transition-fast;
+
+    &:hover {
+        padding-inline: 0.75rem;
+        color: $color-gold;
+    }
+}
+
+.menu-footer__bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba($color-cream, 0.14);
+
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.35);
+
+    span:nth-child(2) {
+        text-align: center;
+    }
+
+    span:last-child {
+        text-align: right;
+    }
+}
+
+@media (max-width: 900px) {
+    .menu-footer__main {
+        grid-template-columns: 1fr;
+        align-items: start;
+        margin: 6rem 0;
+    }
+
+    .menu-footer__aside {
+        max-width: 420px;
+    }
+}
+
+@media (max-width: 600px) {
+    .menu-footer {
+        min-height: auto;
+        padding: 5rem 0 1.5rem;
+    }
+
+    .menu-footer__container {
+        min-height: auto;
+    }
+
+    .menu-footer__main {
+        margin: 6rem 0 5rem;
+    }
+
+    .menu-footer__title {
+        font-size: clamp(4.3rem, 17vw, 7rem);
+    }
+
+    .menu-footer__title span {
+        margin-left: 1.5rem;
+    }
+
+    .menu-footer__bottom {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+    }
+
+    .menu-footer__bottom span,
+    .menu-footer__bottom span:nth-child(2),
+    .menu-footer__bottom span:last-child {
+        text-align: left;
+    }
+
+    .menu-footer__background {
+        right: -25%;
+        font-size: 65vw;
+    }
+}

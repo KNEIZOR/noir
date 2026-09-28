@@ -1,0 +1,134 @@
+@use '@/app/styles/variables' as *;
+
+.chef-story {
+    padding-block: clamp(7rem, 15vw, 14rem);
+
+    overflow: hidden;
+
+    background: $color-black;
+}
+
+.chef-story__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+
+    align-items: center;
+
+    gap: clamp(4rem, 10vw, 12rem);
+}
+
+.chef-story__content {
+    max-width: 36rem;
+}
+
+.chef-story__content .eyebrow {
+    margin: 0 0 2rem;
+
+    color: $color-gold;
+}
+
+.chef-story__content .section-title {
+    margin: 0;
+
+    color: $color-cream;
+}
+
+.chef-story__content em {
+    color: $color-gold;
+}
+
+.chef-story__role {
+    margin: 1rem 0 0;
+
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.4);
+}
+
+.chef-story__text {
+    max-width: 29rem;
+
+    margin: 2.5rem 0 0;
+
+    font-size: 0.82rem;
+    line-height: 1.9;
+
+    color: rgba($color-cream, 0.6);
+}
+
+.chef-story__quote {
+    max-width: 30rem;
+
+    margin: 4rem 0 0;
+    padding-left: 1.5rem;
+
+    border-left: 1px solid $color-gold;
+
+    font-family: $font-display;
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    font-style: italic;
+    line-height: 1.2;
+
+    color: $color-cream;
+}
+
+.chef-story__visual {
+    position: relative;
+
+    height: clamp(38rem, 62vw, 54rem);
+
+    overflow: hidden;
+}
+
+.chef-story__image {
+    position: absolute;
+    inset: -8%;
+
+    background: url('/images/gallery/dining-room.webp') center / cover no-repeat;
+
+    filter: saturate(0.82);
+
+    will-change: transform;
+}
+
+.chef-story__image-number {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+
+    font-family: $font-display;
+    font-size: 5rem;
+    line-height: 1;
+
+    color: rgba($color-cream, 0.16);
+}
+
+@media (max-width: 850px) {
+    .chef-story__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chef-story__visual {
+        height: 85vw;
+        max-height: 44rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .chef-story {
+        padding-block: 6rem;
+    }
+
+    .chef-story__quote {
+        margin-top: 3rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .chef-story__image {
+        transform: none !important;
+    }
+}

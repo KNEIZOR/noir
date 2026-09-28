@@ -8,21 +8,25 @@ type CursorMode = 'default' | 'link' | 'view' | 'arrow';
 
 const CURSOR_SELECTOR = 'a, button, [data-cursor], input, textarea, select';
 
+const INITIAL_POSITION = -100;
+
 export function CustomCursor() {
     const cursorRef = useRef<HTMLDivElement>(null);
     const labelRef = useRef<HTMLSpanElement>(null);
 
     const positionRef = useRef({
-        x: -100,
-        y: -100,
+        x: INITIAL_POSITION,
+        y: INITIAL_POSITION,
     });
 
     const targetPositionRef = useRef({
-        x: -100,
-        y: -100,
+        x: INITIAL_POSITION,
+        y: INITIAL_POSITION,
     });
 
     const modeRef = useRef<CursorMode>('default');
+    const isPointerActiveRef = useRef(false);
+    const hasPointerPositionRef = useRef(false);
 
     useEffect(() => {
         const cursor = cursorRef.current;
@@ -45,13 +49,71 @@ export function CustomCursor() {
         }
 
         let animationFrame = 0;
+        let isDisposed = false;
+
+        const current = positionRef.current;
+        const target = targetPositionRef.current;
+
+        const setCursorPosition = (x: number, y: number, immediate = false) => {
+            target.x = x;
+            target.y = y;
+
+            if (immediate) {
+                current.x = x;
+                current.y = y;
+
+                gsap.set(cursor, {
+                    x,
+                    y,
+                });
+            }
+        };
+
+        const showCursor = (immediate = false) => {
+            if (!hasPointerPositionRef.current) {
+                return;
+            }
+
+            isPointerActiveRef.current = true;
+
+            gsap.killTweensOf(cursor, 'opacity');
+
+            if (immediate) {
+                gsap.set(cursor, {
+                    opacity: 1,
+                });
+
+                return;
+            }
+
+            gsap.to(cursor, {
+                opacity: 1,
+                duration: 0.2,
+                ease: 'power2.out',
+                overwrite: true,
+            });
+        };
+
+        const hideCursor = () => {
+            isPointerActiveRef.current = false;
+
+            gsap.killTweensOf(cursor, 'opacity');
+
+            gsap.to(cursor, {
+                opacity: 0,
+                duration: 0.15,
+                ease: 'power2.out',
+                overwrite: true,
+            });
+        };
 
         const render = () => {
-            const current = positionRef.current;
-            const target = targetPositionRef.current;
+            if (isDisposed) {
+                return;
+            }
 
-            current.x += (target.x - current.x) * 0.18;
-            current.y += (target.y - current.y) * 0.18;
+            current.x += (target.x - current.x) * 0.2;
+            current.y += (target.y - current.y) * 0.2;
 
             gsap.set(cursor, {
                 x: current.x,
@@ -62,50 +124,66 @@ export function CustomCursor() {
         };
 
         const setMode = (mode: CursorMode, customLabel?: string) => {
-            if (modeRef.current === mode && !customLabel) {
+            const nextLabel = customLabel ?? getDefaultLabel(mode);
+
+            const modeChanged = modeRef.current !== mode;
+            const labelChanged = label.textContent !== nextLabel;
+
+            if (!modeChanged && !labelChanged) {
                 return;
             }
 
             modeRef.current = mode;
 
             cursor.dataset.mode = mode;
+            label.textContent = nextLabel;
 
-            if (customLabel) {
-                label.textContent = customLabel;
-            } else {
-                label.textContent = getDefaultLabel(mode);
-            }
-
-            if (mode === 'default') {
-                gsap.to(cursor, {
-                    scale: 1,
-                    duration: 0.35,
-                    ease: 'power3.out',
-                });
-
-                return;
-            }
+            gsap.killTweensOf(cursor, 'scale');
 
             gsap.to(cursor, {
-                scale: 1.45,
-                duration: 0.45,
+                scale: mode === 'default' ? 1 : 1.45,
+                duration: mode === 'default' ? 0.3 : 0.4,
                 ease: 'power3.out',
+                overwrite: true,
             });
         };
 
         const handlePointerMove = (event: PointerEvent) => {
-            targetPositionRef.current.x = event.clientX;
-            targetPositionRef.current.y = event.clientY;
-        };
-
-        const handlePointerOver = (event: PointerEvent) => {
-            const target = event.target;
-
-            if (!(target instanceof Element)) {
+            if (event.pointerType === 'touch') {
                 return;
             }
 
-            const interactiveElement = target.closest(CURSOR_SELECTOR);
+            const { clientX, clientY } = event;
+
+            if (!Number.isFinite(clientX) || !Number.isFinite(clientY)) {
+                return;
+            }
+
+            const isFirstPointerMove = !hasPointerPositionRef.current;
+
+            hasPointerPositionRef.current = true;
+
+            setCursorPosition(clientX, clientY, isFirstPointerMove);
+
+            if (isFirstPointerMove) {
+                showCursor(true);
+            } else if (!isPointerActiveRef.current) {
+                showCursor();
+            }
+        };
+
+        const handlePointerOver = (event: PointerEvent) => {
+            if (!hasPointerPositionRef.current) {
+                return;
+            }
+
+            const targetElement = event.target;
+
+            if (!(targetElement instanceof Element)) {
+                return;
+            }
+
+            const interactiveElement = targetElement.closest(CURSOR_SELECTOR);
 
             if (!interactiveElement) {
                 setMode('default');
@@ -123,11 +201,13 @@ export function CustomCursor() {
                 customMode === 'link'
             ) {
                 setMode(customMode, customLabel ?? undefined);
+
                 return;
             }
 
             if (interactiveElement.matches('button')) {
                 setMode('arrow', customLabel ?? undefined);
+
                 return;
             }
 
@@ -140,38 +220,60 @@ export function CustomCursor() {
         };
 
         const handlePointerLeave = () => {
+            hideCursor();
             setMode('default');
-
-            gsap.to(cursor, {
-                opacity: 0,
-                duration: 0.2,
-                ease: 'power2.out',
-            });
         };
 
-        const handlePointerEnter = () => {
-            gsap.to(cursor, {
-                opacity: 1,
-                duration: 0.3,
-                ease: 'power2.out',
-            });
+        const handlePointerEnter = (event: PointerEvent) => {
+            if (event.pointerType === 'touch') {
+                return;
+            }
+
+            if (
+                Number.isFinite(event.clientX) &&
+                Number.isFinite(event.clientY)
+            ) {
+                const hasPosition = hasPointerPositionRef.current;
+
+                hasPointerPositionRef.current = true;
+
+                setCursorPosition(event.clientX, event.clientY, !hasPosition);
+            }
+
+            if (hasPointerPositionRef.current) {
+                showCursor(true);
+            }
         };
 
         const handleVisibilityChange = () => {
             if (document.visibilityState === 'hidden') {
-                gsap.to(cursor, {
-                    opacity: 0,
-                    duration: 0.15,
-                });
-
+                hideCursor();
                 return;
             }
 
-            gsap.to(cursor, {
-                opacity: 1,
-                duration: 0.25,
-            });
+            if (hasPointerPositionRef.current) {
+                showCursor(true);
+            }
         };
+
+        const handleWindowBlur = () => {
+            hideCursor();
+        };
+
+        const handleWindowFocus = () => {
+            if (hasPointerPositionRef.current) {
+                showCursor(true);
+            }
+        };
+
+        gsap.set(cursor, {
+            x: INITIAL_POSITION,
+            y: INITIAL_POSITION,
+            opacity: 0,
+            scale: 1,
+        });
+
+        animationFrame = requestAnimationFrame(render);
 
         window.addEventListener('pointermove', handlePointerMove, {
             passive: true,
@@ -180,33 +282,45 @@ export function CustomCursor() {
         document.addEventListener('pointerover', handlePointerOver);
 
         document.documentElement.addEventListener(
-            'mouseleave',
+            'pointerleave',
             handlePointerLeave,
         );
 
         document.documentElement.addEventListener(
-            'mouseenter',
+            'pointerenter',
             handlePointerEnter,
         );
 
         document.addEventListener('visibilitychange', handleVisibilityChange);
 
-        animationFrame = requestAnimationFrame(render);
+        window.addEventListener('blur', handleWindowBlur);
+
+        window.addEventListener('focus', handleWindowFocus);
+
+        requestAnimationFrame(() => {
+            if (!isDisposed && hasPointerPositionRef.current) {
+                showCursor(true);
+            }
+        });
 
         return () => {
+            isDisposed = true;
+
             cancelAnimationFrame(animationFrame);
+
+            gsap.killTweensOf(cursor);
 
             window.removeEventListener('pointermove', handlePointerMove);
 
             document.removeEventListener('pointerover', handlePointerOver);
 
             document.documentElement.removeEventListener(
-                'mouseleave',
+                'pointerleave',
                 handlePointerLeave,
             );
 
             document.documentElement.removeEventListener(
-                'mouseenter',
+                'pointerenter',
                 handlePointerEnter,
             );
 
@@ -214,6 +328,10 @@ export function CustomCursor() {
                 'visibilitychange',
                 handleVisibilityChange,
             );
+
+            window.removeEventListener('blur', handleWindowBlur);
+
+            window.removeEventListener('focus', handleWindowFocus);
         };
     }, []);
 

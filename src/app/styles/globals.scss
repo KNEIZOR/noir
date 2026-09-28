@@ -103,6 +103,86 @@ a {
     }
 }
 
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: grid;
+    place-items: center;
+
+    background: $color-black;
+
+    pointer-events: none;
+
+    animation: page-loader-fade 450ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.page-loader__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    text-align: center;
+}
+
+.page-loader__eyebrow {
+    font-family: $font-display;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: 0.08em;
+    color: $color-cream;
+}
+
+.page-loader__line {
+    width: 3rem;
+    height: 1px;
+
+    background: $color-gold;
+
+    transform-origin: center;
+    animation: page-loader-line 900ms cubic-bezier(0.22, 1, 0.36, 1) infinite
+        alternate;
+}
+
+.page-loader__text {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: $color-muted;
+}
+
+@keyframes page-loader-line {
+    from {
+        transform: scaleX(0.35);
+        opacity: 0.35;
+    }
+
+    to {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+@keyframes page-loader-fade {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-loader__line {
+        animation: none;
+    }
+}
+
 @media (hover: hover) and (pointer: fine) {
     html,
     body,
@@ -117,3 +197,8 @@ a {
     }
 }
 
+@media (max-width: 768px) {
+    body.menu-open {
+        overflow: hidden;
+    }
+}

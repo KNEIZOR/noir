@@ -23,6 +23,8 @@
     align-items: center;
     justify-content: flex-end;
 
+    overflow: hidden;
+
     pointer-events: none;
 }
 
@@ -30,7 +32,7 @@
     margin-right: -5vw;
 
     font-family: $font-display;
-    font-size: clamp(30rem, 65vw, 80rem);
+    font-size: clamp(26rem, 58vw, 72rem);
     font-weight: 500;
     line-height: 0.6;
     letter-spacing: -0.12em;
@@ -46,26 +48,29 @@
     min-height: calc(100svh - clamp(14rem, 24vw, 22rem));
 
     display: grid;
-    grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1fr);
+    grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1fr);
     align-items: center;
-    gap: clamp(4rem, 10vw, 11rem);
+
+    gap: clamp(3rem, 7vw, 8rem);
 }
 
 .chef-section__visual {
     position: relative;
 
-    align-self: stretch;
+    min-width: 0;
+    width: 100%;
+
+    align-self: center;
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 .chef-section__image-wrap {
     position: relative;
 
     width: 100%;
-    height: clamp(500px, 72vh, 780px);
+    height: clamp(460px, 68vh, 720px);
 
     overflow: hidden;
 
@@ -98,9 +103,11 @@
 
     background: linear-gradient(
         180deg,
-        rgba(11, 11, 10, 0.05) 20%,
+        rgba(11, 11, 10, 0.04) 20%,
         rgba(11, 11, 10, 0.42) 100%
     );
+
+    pointer-events: none;
 }
 
 .chef-section__image-caption {
@@ -117,6 +124,8 @@
 .chef-section__content {
     position: relative;
 
+    min-width: 0;
+
     padding: 2rem 0;
 }
 
@@ -125,16 +134,22 @@
     align-items: center;
     justify-content: space-between;
 
-    margin-bottom: clamp(3rem, 6vw, 5rem);
+    gap: 2rem;
+
+    margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 .chef-section__eyebrow {
+    min-width: 0;
+
     color: rgba($color-cream, 0.65);
 }
 
 .chef-section__number {
+    flex: 0 0 auto;
+
     font-family: $font-display;
-    font-size: clamp(5rem, 9vw, 9rem);
+    font-size: clamp(4rem, 7vw, 7rem);
     line-height: 0.7;
 
     color: rgba($color-gold, 0.3);
@@ -143,34 +158,38 @@
 }
 
 .chef-section__name {
+    width: 100%;
     max-width: 800px;
 
-    font-size: clamp(5rem, 10vw, 11rem);
-    line-height: 0.77;
+    font-size: clamp(4.5rem, 8vw, 9rem);
+    line-height: 0.78;
     text-transform: uppercase;
+
+    overflow-wrap: normal;
+    word-break: normal;
 
     will-change: transform, opacity;
 
     span {
         display: block;
 
-        margin-left: clamp(2rem, 7vw, 7rem);
+        margin-left: clamp(1.5rem, 5vw, 5rem);
 
         color: $color-gold;
     }
 }
 
 .chef-section__quote {
-    max-width: 470px;
+    width: min(100%, 470px);
 
-    margin: clamp(3rem, 6vw, 6rem) 0 0;
+    margin: clamp(2.5rem, 5vw, 5rem) 0 0;
 
-    padding-left: 1.5rem;
+    padding-left: 1.25rem;
 
     border-left: 1px solid rgba($color-gold, 0.55);
 
     font-family: $font-display;
-    font-size: clamp(1.5rem, 2.4vw, 2.5rem);
+    font-size: clamp(1.35rem, 2vw, 2.15rem);
     font-weight: 400;
     line-height: 1.2;
 
@@ -182,15 +201,17 @@
 .chef-section__details {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem 2rem;
 
-    margin-top: 4rem;
+    gap: 0.9rem 1.75rem;
+
+    margin-top: 3.5rem;
 }
 
 .chef-section__detail {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+
+    gap: 0.65rem;
 
     font-size: 0.6rem;
     font-weight: 600;
@@ -204,12 +225,15 @@
     width: 1.5rem;
     height: 1px;
 
+    flex: 0 0 auto;
+
     background: $color-gold;
 }
 
 .chef-section__vertical-name {
     position: absolute;
-    right: -7rem;
+
+    right: -1.5rem;
     bottom: 3rem;
 
     font-size: 0.55rem;
@@ -221,21 +245,24 @@
 
     writing-mode: vertical-rl;
 
+    pointer-events: none;
+
     will-change: transform;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
     .chef-section__container {
-        grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1fr);
-        gap: 4rem;
+        grid-template-columns: minmax(280px, 0.85fr) minmax(0, 1fr);
+
+        gap: 3.5rem;
+    }
+
+    .chef-section__name {
+        font-size: clamp(4rem, 7.5vw, 7.5rem);
     }
 
     .chef-section__vertical-name {
         display: none;
-    }
-
-    .chef-section__name {
-        font-size: clamp(4.5rem, 9vw, 8rem);
     }
 }
 
@@ -248,7 +275,8 @@
         min-height: 0;
 
         grid-template-columns: 1fr;
-        gap: 4rem;
+
+        gap: 3.5rem;
     }
 
     .chef-section__image-wrap {
@@ -260,7 +288,9 @@
     }
 
     .chef-section__name {
-        font-size: clamp(5rem, 16vw, 9rem);
+        max-width: 850px;
+
+        font-size: clamp(4.5rem, 15vw, 8rem);
     }
 
     .chef-section__background-letter {
@@ -274,39 +304,53 @@
     }
 
     .chef-section__container {
-        gap: 3.5rem;
+        gap: 3rem;
     }
 
     .chef-section__image-wrap {
-        min-height: 420px;
+        min-height: 400px;
         height: 65svh;
     }
 
     .chef-section__top {
-        margin-bottom: 3rem;
+        align-items: flex-start;
+
+        gap: 1rem;
+
+        margin-bottom: 2.75rem;
+    }
+
+    .chef-section__eyebrow {
+        max-width: 12rem;
     }
 
     .chef-section__number {
-        font-size: 4.5rem;
+        font-size: 4rem;
     }
 
     .chef-section__name {
-        font-size: clamp(4.2rem, 19vw, 7rem);
+        font-size: clamp(3.8rem, 18vw, 6.5rem);
         line-height: 0.82;
     }
 
     .chef-section__name span {
-        margin-left: 1.5rem;
+        margin-left: 1.25rem;
     }
 
     .chef-section__quote {
-        margin-top: 3rem;
+        margin-top: 2.75rem;
 
-        font-size: 1.5rem;
+        font-size: 1.45rem;
     }
 
     .chef-section__details {
-        margin-top: 3rem;
+        margin-top: 2.75rem;
+
+        gap: 0.8rem 1.25rem;
+    }
+
+    .chef-section__background-letter {
+        font-size: 80vw;
     }
 }
 

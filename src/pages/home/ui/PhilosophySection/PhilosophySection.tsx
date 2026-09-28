@@ -38,15 +38,23 @@ export function PhilosophySection() {
                 return;
             }
 
-            const titleLines = title.querySelectorAll(
+            const reduceMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)',
+            ).matches;
+
+            if (reduceMotion) {
+                return;
+            }
+
+            const titleLines = title.querySelectorAll<HTMLElement>(
                 '.philosophy-section__title-line',
             );
 
             const intro = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: 'top 75%',
-                    end: 'top 30%',
+                    start: 'top 78%',
+                    end: 'top 38%',
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -56,61 +64,44 @@ export function PhilosophySection() {
                     eyebrow,
                     {
                         opacity: 0,
-                        y: 30,
+                        y: 18,
                     },
                     {
                         opacity: 1,
                         y: 0,
-                        duration: 0.8,
-                        ease: 'power3.out',
+                        duration: 0.7,
+                        ease: 'power2.out',
                     },
                 )
                 .fromTo(
                     line,
                     {
                         scaleX: 0,
-                        transformOrigin: 'left center',
                     },
                     {
                         scaleX: 1,
-                        duration: 1,
-                        ease: 'power3.inOut',
+                        duration: 0.9,
+                        ease: 'power2.inOut',
                     },
-                    '-=0.45',
+                    '-=0.35',
                 )
                 .fromTo(
                     titleLines,
                     {
                         opacity: 0,
-                        yPercent: 110,
-                        rotateX: -35,
-                    },
-                    {
-                        opacity: 1,
-                        yPercent: 0,
-                        rotateX: 0,
-                        duration: 1.1,
-                        stagger: 0.13,
-                        ease: 'power4.out',
-                    },
-                    '-=0.55',
-                )
-                .fromTo(
-                    description,
-                    {
-                        opacity: 0,
-                        y: 30,
+                        y: 45,
                     },
                     {
                         opacity: 1,
                         y: 0,
                         duration: 0.9,
+                        stagger: 0.1,
                         ease: 'power3.out',
                     },
-                    '-=0.55',
+                    '-=0.35',
                 )
                 .fromTo(
-                    number,
+                    description,
                     {
                         opacity: 0,
                         y: 20,
@@ -119,30 +110,44 @@ export function PhilosophySection() {
                         opacity: 1,
                         y: 0,
                         duration: 0.7,
-                        ease: 'power3.out',
+                        ease: 'power2.out',
                     },
-                    '-=0.7',
+                    '-=0.5',
+                )
+                .fromTo(
+                    number,
+                    {
+                        opacity: 0,
+                        y: 15,
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.7,
+                        ease: 'power2.out',
+                    },
+                    '-=0.45',
                 );
 
             gsap.to(title, {
-                yPercent: -10,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1.4,
-                },
-            });
-
-            gsap.to(number, {
-                yPercent: 100,
+                y: -35,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
                     start: 'top bottom',
                     end: 'bottom top',
                     scrub: 1.8,
+                },
+            });
+
+            gsap.to(number, {
+                y: 55,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 2.2,
                 },
             });
         },
@@ -157,7 +162,7 @@ export function PhilosophySection() {
             className="philosophy-section"
             id="philosophy"
         >
-            <div className="philosophy-section__background">
+            <div className="philosophy-section__background" aria-hidden="true">
                 <span className="philosophy-section__background-word">
                     NOIRÉ
                 </span>
@@ -184,13 +189,13 @@ export function PhilosophySection() {
                         ref={titleRef}
                         className="philosophy-section__title display-title"
                     >
-                        {philosophyLines.map((line) => (
+                        {philosophyLines.map((text) => (
                             <span
-                                key={line}
+                                key={text}
                                 className="philosophy-section__title-mask"
                             >
                                 <span className="philosophy-section__title-line">
-                                    {line}
+                                    {text}
                                 </span>
                             </span>
                         ))}

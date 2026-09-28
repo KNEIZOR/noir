@@ -1,0 +1,78 @@
+@use '@/app/styles/variables' as *;
+
+.menu-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: $color-black;
+    color: $color-cream;
+}
+
+.menu-page__header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: $z-header;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1.5rem max(1.5rem, calc((100vw - $container-width) / 2));
+
+    pointer-events: none;
+}
+
+.menu-page__logo,
+.menu-page__back {
+    pointer-events: auto;
+}
+
+.menu-page__logo {
+    font-family: $font-display;
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.menu-page__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.7);
+
+    transition:
+        color $transition-fast,
+        transform $transition-fast;
+
+    &:hover {
+        color: $color-cream;
+        transform: translateY(-2px);
+    }
+}
+
+.menu-page__categories {
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .menu-page__header {
+        padding: 1.25rem;
+    }
+
+    .menu-page__logo {
+        font-size: 1.1rem;
+    }
+
+    .menu-page__back {
+        gap: 0.5rem;
+        font-size: 0.52rem;
+    }
+}

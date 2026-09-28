@@ -1,51 +1,18 @@
 import { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { allMenuItems, type MenuItem } from '@/entities/menu/model/menuData';
+import { LazyImage } from '@/shared/ui/LazyImage/LazyImage';
+
 import './MenuPreviewSection.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type MenuItem = {
-    id: number;
-    name: string;
-    description: string;
-    price: string;
-    image: string;
-};
-
-const menuItems: MenuItem[] = [
-    {
-        id: 1,
-        name: 'Cured Salmon',
-        description: 'Fennel · Citrus · Dill oil',
-        price: '24',
-        image: 'https://images.unsplash.com/photo-1485921325833-c519f76c4927?auto=format&fit=crop&w=1200&q=90',
-    },
-    {
-        id: 2,
-        name: 'Charred Octopus',
-        description: 'Black garlic · Smoked lemon · Wild herbs',
-        price: '32',
-        image: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=90',
-    },
-    {
-        id: 3,
-        name: 'Wild Mushroom',
-        description: 'Truffle · Hazelnut · Brown butter',
-        price: '26',
-        image: 'https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=1200&q=90',
-    },
-    {
-        id: 4,
-        name: 'Duck Confit',
-        description: 'Pear · Juniper · Red wine jus',
-        price: '34',
-        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=90',
-    },
-];
+const menuItems = allMenuItems.slice(0, 4);
 
 export function MenuPreviewSection() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -53,7 +20,7 @@ export function MenuPreviewSection() {
     const titleRef = useRef<HTMLHeadingElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
     const imageRef = useRef<HTMLImageElement>(null);
-    const imageFrameRef = useRef<HTMLDivElement>(null);
+    const imageFrameRef = useRef<HTMLAnchorElement>(null);
     const backgroundWordRef = useRef<HTMLDivElement>(null);
 
     const [activeItem, setActiveItem] = useState<MenuItem>(menuItems[0]);
@@ -80,11 +47,15 @@ export function MenuPreviewSection() {
 
             const items = list.querySelectorAll('.menu-preview__item');
 
+            const titleLines = title.querySelectorAll(
+                '.menu-preview__title-line',
+            );
+
             const intro = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
                     start: 'top 72%',
-                    end: 'top 30%',
+                    end: 'top 28%',
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -104,15 +75,18 @@ export function MenuPreviewSection() {
                     },
                 )
                 .fromTo(
-                    title,
+                    titleLines,
                     {
                         opacity: 0,
-                        y: 70,
+                        yPercent: 110,
+                        rotateX: -20,
                     },
                     {
                         opacity: 1,
-                        y: 0,
+                        yPercent: 0,
+                        rotateX: 0,
                         duration: 1,
+                        stagger: 0.12,
                         ease: 'power4.out',
                     },
                     '-=0.4',
@@ -122,14 +96,16 @@ export function MenuPreviewSection() {
                     {
                         clipPath: 'inset(8% 8% 8% 8%)',
                         opacity: 0,
+                        y: 30,
                     },
                     {
                         clipPath: 'inset(0% 0% 0% 0%)',
                         opacity: 1,
+                        y: 0,
                         duration: 1.2,
                         ease: 'power4.inOut',
                     },
-                    '-=0.6',
+                    '-=0.55',
                 )
                 .fromTo(
                     items,
@@ -144,7 +120,7 @@ export function MenuPreviewSection() {
                         stagger: 0.1,
                         ease: 'power3.out',
                     },
-                    '-=0.65',
+                    '-=0.7',
                 );
 
             gsap.to(backgroundWord, {
@@ -157,6 +133,27 @@ export function MenuPreviewSection() {
                     scrub: 2,
                 },
             });
+
+            const image = imageRef.current;
+
+            if (image) {
+                gsap.fromTo(
+                    image,
+                    {
+                        scale: 1.08,
+                    },
+                    {
+                        scale: 1,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: 1.5,
+                        },
+                    },
+                );
+            }
         },
         {
             scope: sectionRef,
@@ -164,7 +161,7 @@ export function MenuPreviewSection() {
     );
 
     const handleItemEnter = (item: MenuItem) => {
-        if (item.id === activeItem.id) {
+        if (item.slug === activeItem.slug) {
             return;
         }
 
@@ -175,10 +172,12 @@ export function MenuPreviewSection() {
             return;
         }
 
+        gsap.killTweensOf(image);
+
         gsap.to(image, {
             opacity: 0,
             scale: 1.04,
-            duration: 0.22,
+            duration: 0.2,
             ease: 'power2.out',
             onComplete: () => {
                 setActiveItem(item);
@@ -223,32 +222,37 @@ export function MenuPreviewSection() {
                         ref={titleRef}
                         className="menu-preview__title display-title"
                     >
-                        A taste of
-                        <span>NOIRÉ</span>
+                        <span className="menu-preview__title-line">
+                            A taste of
+                        </span>
+
+                        <span className="menu-preview__title-line menu-preview__title-line--gold">
+                            NOIRÉ
+                        </span>
                     </h2>
                 </header>
 
                 <div className="menu-preview__content">
                     <div ref={listRef} className="menu-preview__list">
                         {menuItems.map((item) => {
-                            const isActive = item.id === activeItem.id;
+                            const isActive = item.slug === activeItem.slug;
 
                             return (
-                                <button
-                                    key={item.id}
-                                    type="button"
+                                <Link
+                                    key={item.slug}
+                                    to={`/menu/${item.slug}`}
                                     className={`menu-preview__item ${
                                         isActive
                                             ? 'menu-preview__item--active'
                                             : ''
                                     }`}
+                                    data-cursor="arrow"
                                     onMouseEnter={() => handleItemEnter(item)}
                                     onFocus={() => handleItemEnter(item)}
-                                    onClick={() => handleItemEnter(item)}
                                 >
                                     <span className="menu-preview__item-main">
                                         <span className="menu-preview__item-number">
-                                            {String(item.id).padStart(2, '0')}
+                                            {item.number}
                                         </span>
 
                                         <span className="menu-preview__item-info">
@@ -265,17 +269,19 @@ export function MenuPreviewSection() {
                                     <span className="menu-preview__item-price">
                                         €{item.price}
                                     </span>
-                                </button>
+                                </Link>
                             );
                         })}
                     </div>
 
                     <div className="menu-preview__visual">
-                        <div
+                        <Link
                             ref={imageFrameRef}
+                            to={`/menu/${activeItem.slug}`}
                             className="menu-preview__image-frame"
+                            data-cursor="view"
                         >
-                            <img
+                            <LazyImage
                                 ref={imageRef}
                                 className="menu-preview__image"
                                 src={activeItem.image}
@@ -284,19 +290,48 @@ export function MenuPreviewSection() {
 
                             <div className="menu-preview__image-overlay" />
 
-                            <span className="menu-preview__image-label">
-                                {activeItem.name}
-                            </span>
-                        </div>
+                            <div className="menu-preview__image-meta">
+                                <span className="menu-preview__image-number">
+                                    {activeItem.number}
+                                </span>
+
+                                <span className="menu-preview__image-label">
+                                    {activeItem.name}
+                                </span>
+
+                                <span
+                                    className="menu-preview__image-arrow"
+                                    aria-hidden="true"
+                                >
+                                    ↗
+                                </span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
 
                 <div className="menu-preview__footer">
                     <span>Seasonal selection</span>
 
-                    <span className="menu-preview__footer-line" />
+                    <span
+                        className="menu-preview__footer-line"
+                        aria-hidden="true"
+                    />
 
-                    <span>View full menu</span>
+                    <Link
+                        className="menu-preview__full-menu"
+                        to="/menu"
+                        data-cursor="arrow"
+                    >
+                        <span>View full menu</span>
+
+                        <span
+                            className="menu-preview__full-menu-arrow"
+                            aria-hidden="true"
+                        >
+                            ↗
+                        </span>
+                    </Link>
                 </div>
             </div>
         </section>

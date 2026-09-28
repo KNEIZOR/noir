@@ -1,0 +1,204 @@
+@use '@/app/styles/variables' as *;
+
+.menu-hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+    background: $color-black;
+}
+
+.menu-hero__background {
+    position: absolute;
+    z-index: -3;
+    inset: -8%;
+
+    background-image: url('/images/gallery/evening-light.webp');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    filter: saturate(0.72);
+    will-change: transform;
+}
+
+.menu-hero__overlay {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba($color-black, 0.88) 0%,
+            rgba($color-black, 0.58) 45%,
+            rgba($color-black, 0.28) 100%
+        ),
+        linear-gradient(
+            180deg,
+            rgba($color-black, 0.3) 0%,
+            rgba($color-black, 0.08) 45%,
+            rgba($color-black, 0.82) 100%
+        );
+}
+
+.menu-hero__number {
+    position: absolute;
+    top: 15%;
+    right: -2%;
+
+    font-family: $font-display;
+    font-size: clamp(16rem, 32vw, 34rem);
+    font-weight: 500;
+    line-height: 0.7;
+    letter-spacing: -0.08em;
+
+    color: rgba($color-cream, 0.045);
+
+    pointer-events: none;
+    user-select: none;
+    will-change: transform;
+}
+
+.menu-hero__content {
+    position: relative;
+    width: 100%;
+    padding-top: 9rem;
+    padding-bottom: clamp(6rem, 11vw, 10rem);
+    will-change: transform;
+}
+
+.menu-hero__eyebrow {
+    margin-bottom: clamp(2rem, 4vw, 4rem);
+}
+
+.menu-hero__title {
+    max-width: 1100px;
+
+    font-size: clamp(5rem, 11vw, 12rem);
+    text-transform: uppercase;
+
+    perspective: 800px;
+}
+
+.menu-hero__title-mask {
+    display: block;
+    overflow: hidden;
+}
+
+.menu-hero__title-line {
+    display: block;
+    transform-origin: center bottom;
+    will-change: transform, opacity;
+}
+
+.menu-hero__title-line--offset {
+    margin-left: clamp(2rem, 11vw, 12rem);
+    color: $color-gold;
+}
+
+.menu-hero__bottom {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.5fr) minmax(280px, 0.7fr);
+    gap: clamp(2rem, 7vw, 8rem);
+    align-items: start;
+
+    max-width: 900px;
+    margin-top: clamp(3rem, 6vw, 6rem);
+}
+
+.menu-hero__line {
+    width: 100%;
+    height: 1px;
+    margin-top: 0.5rem;
+    background: rgba($color-gold, 0.65);
+    transform-origin: left center;
+}
+
+.menu-hero__subtitle {
+    max-width: 440px;
+
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.58);
+}
+
+.menu-hero__scroll {
+    position: absolute;
+    right: max(1.5rem, calc((100vw - $container-width) / 2));
+    bottom: 2rem;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    color: rgba($color-cream, 0.4);
+
+    writing-mode: vertical-rl;
+}
+
+.menu-hero__scroll-line {
+    width: 1px;
+    height: 3.5rem;
+    background: rgba($color-gold, 0.55);
+}
+
+@media (max-width: 900px) {
+    .menu-hero__bottom {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .menu-hero__line {
+        max-width: 7rem;
+    }
+
+    .menu-hero__scroll {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .menu-hero__content {
+        padding-top: 8rem;
+        padding-bottom: 5rem;
+    }
+
+    .menu-hero__title {
+        font-size: clamp(4.3rem, 17vw, 7rem);
+    }
+
+    .menu-hero__title-line--offset {
+        margin-left: 1.5rem;
+    }
+
+    .menu-hero__number {
+        top: 30%;
+        right: -15%;
+        font-size: 70vw;
+    }
+
+    .menu-hero__subtitle {
+        max-width: 300px;
+        font-size: 0.62rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .menu-hero__background,
+    .menu-hero__content,
+    .menu-hero__number {
+        transform: none !important;
+    }
+}

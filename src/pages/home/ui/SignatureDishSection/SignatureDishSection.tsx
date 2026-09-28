@@ -4,11 +4,37 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { LazyImage } from '@/shared/ui/LazyImage/LazyImage';
+
 import './SignatureDishSection.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const ingredients = ['Black garlic', 'Smoked lemon', 'Wild herbs'];
+type Ingredient = {
+    id: number;
+    label: string;
+};
+
+const ingredients: Ingredient[] = [
+    {
+        id: 1,
+        label: 'Black garlic',
+    },
+    {
+        id: 2,
+        label: 'Smoked lemon',
+    },
+    {
+        id: 3,
+        label: 'Wild herbs',
+    },
+];
+
+const signatureDish = {
+    name: 'Charred Octopus',
+    image: '/images/dishes/charred-octopus.webp',
+    alt: 'Charred octopus with potatoes and greens served on an elegant plate',
+};
 
 export function SignatureDishSection() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -47,13 +73,21 @@ export function SignatureDishSection() {
                 return;
             }
 
+            const reducedMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)',
+            );
+
+            if (reducedMotion.matches) {
+                return;
+            }
+
             const ingredientItems = ingredientsList.querySelectorAll('li');
 
             const introTimeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: section,
-                    start: 'top 72%',
-                    end: 'top 25%',
+                    start: 'top 78%',
+                    end: 'top 42%',
                     toggleActions: 'play none none reverse',
                 },
             });
@@ -66,136 +100,140 @@ export function SignatureDishSection() {
                     },
                     {
                         clipPath: 'inset(0 0% 0 0)',
-                        duration: 1.4,
-                        ease: 'power4.inOut',
+                        duration: 1.25,
+                        ease: 'power3.inOut',
                     },
                 )
                 .fromTo(
                     image,
                     {
-                        scale: 1.2,
+                        scale: 1.12,
                     },
                     {
                         scale: 1,
-                        duration: 1.8,
+                        duration: 1.5,
                         ease: 'power3.out',
                     },
-                    '-=1.15',
+                    '-=1',
                 )
                 .fromTo(
                     eyebrow,
                     {
                         opacity: 0,
-                        x: 35,
+                        x: 24,
                     },
                     {
                         opacity: 1,
                         x: 0,
-                        duration: 0.8,
+                        duration: 0.7,
                         ease: 'power3.out',
                     },
-                    '-=0.9',
+                    '-=0.8',
                 )
                 .fromTo(
                     title,
                     {
                         opacity: 0,
-                        y: 60,
+                        y: 45,
                     },
                     {
                         opacity: 1,
                         y: 0,
-                        duration: 1,
-                        ease: 'power4.out',
+                        duration: 0.85,
+                        ease: 'power3.out',
                     },
-                    '-=0.55',
+                    '-=0.45',
                 )
                 .fromTo(
                     ingredientItems,
                     {
                         opacity: 0,
-                        x: 30,
+                        x: 20,
                     },
                     {
                         opacity: 1,
                         x: 0,
-                        duration: 0.65,
-                        stagger: 0.1,
-                        ease: 'power3.out',
-                    },
-                    '-=0.6',
-                )
-                .fromTo(
-                    description,
-                    {
-                        opacity: 0,
-                        y: 25,
-                    },
-                    {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.7,
+                        duration: 0.55,
+                        stagger: 0.08,
                         ease: 'power3.out',
                     },
                     '-=0.4',
                 )
                 .fromTo(
+                    description,
+                    {
+                        opacity: 0,
+                        y: 20,
+                    },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.65,
+                        ease: 'power3.out',
+                    },
+                    '-=0.35',
+                )
+                .fromTo(
                     number,
                     {
                         opacity: 0,
-                        scale: 0.8,
+                        scale: 0.9,
                     },
                     {
                         opacity: 1,
                         scale: 1,
-                        duration: 0.8,
+                        duration: 0.65,
                         ease: 'power3.out',
                     },
-                    '-=0.55',
+                    '-=0.45',
                 );
 
             gsap.to(image, {
-                yPercent: -9,
-                scale: 1.08,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1.5,
-                },
-            });
-
-            gsap.to(title, {
-                yPercent: -8,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1.8,
-                },
-            });
-
-            gsap.to(backgroundWord, {
-                xPercent: -12,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: section,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 2.2,
-                },
-            });
-
-            gsap.to(number, {
-                yPercent: 70,
+                yPercent: -5,
+                scale: 1.05,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: section,
                     start: 'top bottom',
                     end: 'bottom top',
                     scrub: 2,
+                    invalidateOnRefresh: true,
+                },
+            });
+
+            gsap.to(title, {
+                yPercent: -5,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 2.4,
+                    invalidateOnRefresh: true,
+                },
+            });
+
+            gsap.to(backgroundWord, {
+                xPercent: -7,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 3,
+                    invalidateOnRefresh: true,
+                },
+            });
+
+            gsap.to(number, {
+                yPercent: 35,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 2.5,
+                    invalidateOnRefresh: true,
                 },
             });
         },
@@ -220,14 +258,17 @@ export function SignatureDishSection() {
                         ref={imageWrapRef}
                         className="signature-section__image-wrap"
                     >
-                        <img
+                        <LazyImage
                             ref={imageRef}
                             className="signature-section__image"
-                            src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1600&q=90"
-                            alt="Charred octopus served with herbs"
+                            src={signatureDish.image}
+                            alt={signatureDish.alt}
                         />
 
-                        <div className="signature-section__image-overlay" />
+                        <div
+                            className="signature-section__image-overlay"
+                            aria-hidden="true"
+                        />
                     </div>
 
                     <span className="signature-section__visual-caption">
@@ -247,6 +288,7 @@ export function SignatureDishSection() {
                         <span
                             ref={numberRef}
                             className="signature-section__number"
+                            aria-hidden="true"
                         >
                             02
                         </span>
@@ -256,8 +298,13 @@ export function SignatureDishSection() {
                         ref={titleRef}
                         className="signature-section__title display-title"
                     >
-                        Charred
-                        <span>Octopus</span>
+                        <span className="signature-section__title-line">
+                            Charred
+                        </span>
+
+                        <span className="signature-section__title-line signature-section__title-line--offset">
+                            Octopus
+                        </span>
                     </h2>
 
                     <ul
@@ -265,9 +312,13 @@ export function SignatureDishSection() {
                         className="signature-section__ingredients"
                     >
                         {ingredients.map((ingredient) => (
-                            <li key={ingredient}>
-                                <span className="signature-section__ingredient-dot" />
-                                {ingredient}
+                            <li key={ingredient.id}>
+                                <span
+                                    className="signature-section__ingredient-dot"
+                                    aria-hidden="true"
+                                />
+
+                                <span>{ingredient.label}</span>
                             </li>
                         ))}
                     </ul>

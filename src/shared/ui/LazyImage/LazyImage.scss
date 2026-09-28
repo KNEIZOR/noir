@@ -1,0 +1,71 @@
+@use '@/app/styles/variables' as *;
+
+.lazy-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: $color-surface;
+}
+
+.lazy-image__placeholder {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+
+    background: linear-gradient(
+        110deg,
+        rgba($color-white, 0.025) 20%,
+        rgba($color-white, 0.06) 40%,
+        rgba($color-white, 0.025) 60%
+    );
+
+    background-size: 200% 100%;
+
+    animation: lazy-image-shimmer 1.8s ease-in-out infinite;
+}
+
+.lazy-image__image {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+
+    object-fit: cover;
+
+    transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+
+    &--loaded {
+        opacity: 1;
+    }
+
+    &--error {
+        opacity: 0;
+    }
+}
+
+@keyframes lazy-image-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lazy-image__placeholder {
+        animation: none;
+    }
+
+    .lazy-image__image {
+        transition: none;
+    }
+}
