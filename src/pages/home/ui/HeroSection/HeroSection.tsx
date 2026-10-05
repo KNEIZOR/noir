@@ -72,17 +72,6 @@ export function HeroSection() {
                 return;
             }
 
-            /*
-             * INTRO
-             *
-             * Эта анимация отвечает только за
-             * первое появление Hero.
-             *
-             * Важно:
-             * последующие ScrollTrigger-анимации
-             * не должны конфликтовать с opacity
-             * до завершения intro.
-             */
             const introTimeline = gsap.timeline({
                 defaults: {
                     ease: 'power3.out',
@@ -220,17 +209,6 @@ export function HeroSection() {
                 },
             });
 
-            /*
-             * CONTENT PARALLAX
-             *
-             * Здесь больше НЕТ opacity.
-             *
-             * Это принципиально:
-             * пользователь может начать скроллить
-             * сразу после открытия страницы,
-             * и intro-анимация всё равно сможет
-             * показать текст.
-             */
             gsap.to(content, {
                 yPercent: -16,
                 ease: 'none',
@@ -243,17 +221,6 @@ export function HeroSection() {
                 },
             });
 
-            /*
-             * CONTENT FADE OUT
-             *
-             * Исчезновение запускается отдельно
-             * и только после того, как пользователь
-             * уже начал покидать Hero.
-             *
-             * Благодаря start: '18% top'
-             * мгновенный скролл после загрузки
-             * не убивает intro-анимацию.
-             */
             gsap.fromTo(
                 content,
                 {
